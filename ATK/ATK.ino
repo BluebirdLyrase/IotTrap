@@ -20,6 +20,7 @@ Adafruit_SSD1306 OLED(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 DHT dht(D9, DHT22, 15); //Humid and Temp Sensor
 int pinTone = D8; //sound
 int BH1750address = 0x23;       // Set BH1750 address
+int inputPin = D3;               // choose the input pin (for PIR sensor)
 byte buff[2];
 WidgetBridge bridge2(V2);
 
@@ -42,18 +43,7 @@ BLYNK_WRITE(V4) {
 }
 
 void Sensor() {
-
   Serial.println("begin sensor");
-
-  //  //temp
-  //  bridge2.virtualWrite(V0,25);
-  //  //Humid
-  //  bridge2.virtualWrite(V1,50);
-  //  //light
-  //  bridge2.virtualWrite(V2,100);
-  //Rat
-  bridge2.virtualWrite(V3, 3);
-
   ///////////////// Temp Humid/////////////////////////////
   float h = dht.readHumidity();
   float t = dht.readTemperature();
@@ -94,16 +84,11 @@ void Sensor() {
     Serial.println("can't read lux"); // Show result value
   }
 
-  //  Blynk.virtualWrite(V0, t);
-  //  //    pin 1
-  //  WidgetLED led1(V1);
-  //  if (t > 25) {
-  //    Blynk.notify("oi oi Temp > 25");
-  //
-  //    led1.on();
-  //  } else {
-  //    led1.off();
-  //  }
+  //  Rat
+  int valrat = digitalRead(inputPin);  // read input value
+  Serial.println(valrat);
+    //Rat
+  bridge2.virtualWrite(V3, valrat);
 
 }
 
@@ -112,6 +97,7 @@ void Sensor() {
 void setup()
 {
   // Debug console
+  pinMode(inputPin, INPUT);     // set Dome Sendor
   Serial.begin( 115200);
   pinMode(light, OUTPUT); //set Light
   dht.begin(); // set Humid and Temp Sensor
@@ -121,7 +107,7 @@ void setup()
     Serial.print("Connecting to B2");
   }
 
-  timer.setInterval(2000L, Sensor);
+  timer.setInterval(20L, Sensor);
   Wire.begin(); // need for read lux
   OLED.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 }
