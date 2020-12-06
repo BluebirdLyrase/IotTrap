@@ -55,14 +55,6 @@ void Sensor() {
   Serial.printf("H=%.lf : T=%.lf ", h, t);
   Serial.println("");
 
-  OLED.clearDisplay();               //Clear display
-  OLED.setTextColor(WHITE);          //Set text color
-  OLED.setCursor(0, 0);              //Set display start position
-  OLED.setTextSize(3);               //Set text size x1
-  OLED.println("Temp");          //Type message
-  OLED.setCursor(0, 35);            //Set display postion
-  OLED.println(String(t) + " C"); // Show result value
-  OLED.display();                    //Enable display
   //temp
   bridge2.virtualWrite(V0, t);
   //Humid
@@ -90,6 +82,21 @@ void Sensor() {
     //Rat
   bridge2.virtualWrite(V3, valrat);
 
+  OLED.clearDisplay();               //Clear display
+  OLED.setTextColor(WHITE);          //Set text color
+  OLED.setCursor(0, 0);              //Set display start position
+  OLED.setTextSize(1);               //Set text size x1
+  OLED.print("Temp:");          //Type message
+  OLED.print(t); // Show result value
+  OLED.println(" C "); 
+  OLED.print("Humid:");          //Type message
+  OLED.println(h); // Show result value
+  OLED.setCursor(0, 15);            //Set display postion
+  OLED.print("Light:");          //Type message
+  OLED.println(val); // Show result value
+  OLED.print("Rat:");          //Type message
+  OLED.println(valrat); // Show result value
+
 }
 
 
@@ -98,7 +105,7 @@ void setup()
 {
   // Debug console
   pinMode(inputPin, INPUT);     // set Dome Sendor
-  Serial.begin( 115200);
+  Serial.begin(115200);
   pinMode(light, OUTPUT); //set Light
   dht.begin(); // set Humid and Temp Sensor
   Blynk.begin(auth, ssid, pass);

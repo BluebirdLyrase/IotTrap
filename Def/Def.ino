@@ -53,14 +53,14 @@ BlynkTimer timer;
   humid = pinValue;
   }
 
-    BLYNK_WRITE(V2){
+  BLYNK_WRITE(V2){
   int pinValue = param.asInt();
   Serial.print("Light V2 Value is : ");
   Serial.println(pinValue);
   light = pinValue;
   }
 
-    BLYNK_WRITE(V3){
+  BLYNK_WRITE(V3){
   int pinValue = param.asInt();
   Serial.print("Rat V3 Value is : ");
   Serial.println(pinValue);
