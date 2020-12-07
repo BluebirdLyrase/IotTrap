@@ -49,29 +49,29 @@ BlynkTimer timer;
 
 BLYNK_WRITE(V0) {
   int pinValue = param.asInt();
-//  Serial.print("Temp V0 Value is : ");
-//  Serial.println(pinValue);
+  Serial.print("Temp V0 Value is : ");
+  Serial.println(pinValue);
   temp = pinValue;
 }
 
 BLYNK_WRITE(V1) {
   int pinValue = param.asInt();
-//  Serial.print("Humid V1 Value is : ");
-//  Serial.println(pinValue);
+  Serial.print("Humid V1 Value is : ");
+  Serial.println(pinValue);
   humid = pinValue;
 }
 
 BLYNK_WRITE(V2) {
   int pinValue = param.asInt();
-//  Serial.print("Light V2 Value is : ");
-//  Serial.println(pinValue);
+  Serial.print("Light V2 Value is : ");
+  Serial.println(pinValue);
   light = pinValue;
 }
 
 BLYNK_WRITE(V3) {
   int pinValue = param.asInt();
-//  Serial.print("Rat V3 Value is : ");
-//  Serial.println(pinValue);
+  Serial.print("Rat V3 Value is : ");
+  Serial.println(pinValue);
   rat = pinValue;
 }
 
@@ -98,7 +98,7 @@ void Sensor() {
 
 
   if (rat > 0) {
-    digitalWrite(redlight, HIGH);
+    
     if(isNew){
     ratCount = ratCount + 1;
      LINE.notify("Caught a rat!");
@@ -129,20 +129,12 @@ void Sensor() {
   OLED.println(ratCount); // Show result value
   
   if(!isNew){ // isNew is basicly reverse have rat 
+    digitalWrite(redlight, HIGH);
     OLED.println("status : HAVE RAT!"); // Show result value
   }else{
     OLED.println("status : NO RAT"); // Show result value
   }
-
-  //for test
-  //  if(temp>=18&&temp<=30&&humid>=69&&humid<=70){
-  //    digitalWrite(yellowlight, HIGH);
-  //    }else{
-  //      digitalWrite(yellowlight, LOW);
-  //      }
-
-  //  digitalWrite(yellowlight, HIGH);
-
+  
   OLED.display();                    //Enable display
 }
 void setup()

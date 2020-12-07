@@ -17,10 +17,10 @@
 Adafruit_SSD1306 OLED(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define light D0 //Light
-DHT dht(D9, DHT22, 15); //Humid and Temp Sensor
+DHT dht(D5, DHT22, 15); //Humid and Temp Sensor
 int pinTone = D8; //sound
 int BH1750address = 0x23;       // Set BH1750 address
-int inputPin = D3;               // choose the input pin (for PIR sensor)
+int inputPin = D7;               // choose the input pin (for PIR sensor)
 byte buff[2];
 WidgetBridge bridge2(V2);
 
@@ -114,7 +114,7 @@ void setup()
     Serial.print("Connecting to B2");
   }
 
-  timer.setInterval(20L, Sensor);
+  timer.setInterval(1000L, Sensor);
   Wire.begin(); // need for read lux
   OLED.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 }
