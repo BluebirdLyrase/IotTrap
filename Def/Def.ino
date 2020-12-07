@@ -1,5 +1,5 @@
 #define BLYNK_PRINT Serial
-
+#include <TridentTD_LineNotify.h>
 #include <Wire.h>                   // Include library
 #include <SPI.h>
 
@@ -25,14 +25,17 @@ WidgetBridge bridge2(V2);
 
 //Tew and PSU
 //char auth[] = "CwfcDLtcKrAYdZQ96xeE3hE7QqacBGXz";//Authen code 1
-//char ssid[] = "iotwifi";
-//char pass[] = "1234567890";
+char ssid[] = "iotwifi";
+char pass[] = "1234567890";
+
+//char ssid[] = "moi8lite";
+//char pass[] = "12341234";
 
 
 //ME
 char auth[] = "XqWx_B489MGXJJ38uNtBs-Ub6IpRpvwL";//Authen code DEF
-char ssid[] = "uraiwan";
-char pass[] = "0817883998";
+//char ssid[] = "uraiwan";
+//char pass[] = "0817883998";
 String LINE_TOKEN = "5VlLmYvoiehckgOpxJMLfLSoLnnPoWk2ahHbjPDf3RA";   //Line Token
 
 int temp;
@@ -98,7 +101,7 @@ void Sensor() {
     digitalWrite(redlight, HIGH);
     if(isNew){
     ratCount = ratCount + 1;
-    Send_LineNotify(LINE_TOKEN, "Rat is caught!");
+     LINE.notify("Caught a rat!");
     }
     isNew = false;
   }
@@ -112,7 +115,7 @@ void Sensor() {
   if (buttonstate == LOW) {
     digitalWrite(redlight, LOW);
     isNew = true;
-    Send_LineNotify(LINE_TOKEN, "Cage Reset");
+    LINE.notify("Cage Reset");
   }
 
   //
@@ -146,6 +149,7 @@ void setup()
 {
   // Debug console
   Serial.begin(115200);
+  LINE.setToken(LINE_TOKEN);
   pinMode(redlight, OUTPUT); //set Light
   pinMode(yellowlight, OUTPUT); //set Light
   pinMode(btn, INPUT); //redlight toggle btn
@@ -173,27 +177,4 @@ void loop()
 {
   Blynk.run();
   timer.run();
-}
-
-void Send_LineNotify(String Line_token, String message)
-{
-  String msg = String("message=") + message;
-
-  WiFiClientSecure client;
-  if (!client.connect("notify-api.line.me", 443)) {
-    Serial.println("connection failed");
-    return;
-  }
-
-  String req = "";
-  req += "POST /api/notify HTTP/1.1\r\n";
-  req += "Host: notify-api.line.me\r\n";
-  req += "Content-Type: application/x-www-form-urlencoded\r\n";
-  req += "Authorization: Bearer " + String(Line_token) + "\r\n";
-  req += "Content-Length: " + String(msg.length()) + "\r\n";
-  req += "\r\n";
-  req +=  msg;
-
-  client.print(req);
-  
 }

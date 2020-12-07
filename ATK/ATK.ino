@@ -26,13 +26,13 @@ WidgetBridge bridge2(V2);
 
 //Tew and PSU
 //char auth[] = "Ar82EhKUaDi28TRffYK97YruWG58CYhc";//Authen code ATK
-//char ssid[] = "iotwifi";
-//char pass[] = "1234567890";
+char ssid[] = "iotwifi";
+char pass[] = "1234567890";
 
 //ME
 char auth[] = "Ven87jBqLrY-9DZ6wmxjbkUlADlD1u_W";//Authen code ATK
-char ssid[] = "uraiwan";
-char pass[] = "0817883998";
+//char ssid[] = "uraiwan";
+//char pass[] = "0817883998";
 
 BlynkTimer timer;
 
